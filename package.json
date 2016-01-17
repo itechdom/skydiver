@@ -16,6 +16,7 @@
   "dependencies": {
     "jquery": "^2.1.4",
     "phaser": "^2.4.4",
+    "pixi.js": "^3.0.9",
     "route-matcher": "^0.1.0",
     "route-parser": "0.0.4",
     "rx": "^4.0.7",

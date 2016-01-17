@@ -1,14 +1,38 @@
-var Phaser = require('phaser');
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create });
+'use strict';
+//this is the main game file
+var $ = require('jquery');
+var Rx = require('rx');
+var actions = require("../client/client.actions.js");
 
-function preload () {
+class gameMain{
 
-	game.load.image('logo', 'phaser.png');
-
+	constructor(){
+		this.actions = actions;
+		actions.request$.subscribe(()=>{
+			init();
+		});
+	}
 }
 
-function create () {
-	var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-	logo.anchor.setTo(0.5, 0.5);
+function init(){
+	var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create });
+
+	var sprite;
+
+	function preload() {
+
+		//  37x45 is the size of each frame
+		//  There are 18 frames in the PNG - you can leave this value blank if the frames fill up the entire PNG, but in this case there are some
+		//  blank frames at the end, so we tell the loader how many to load
+		game.load.spritesheet('uniqueKey', 'dist/diver-pixel.png', 72, 72,2);
+	}
+	function create() {
+
+		var sprite = game.add.sprite(100, 200, 'uniqueKey');
+		sprite.animations.add('walk');
+		sprite.animations.play('walk', 2, true);
+	}
+
 
 }
+module.exports = new gameMain();
